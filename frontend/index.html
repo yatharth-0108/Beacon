@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beacon — A Newsroom for Fact-Checked News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span id="today"></span>
+    <span>Vol. I · No. 1 <span class="blink">● LIVE VERIFICATION</span></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <a class="masthead-link" href="index.html">
+    <div class="eyebrow"><span>Est. 2026</span><span>ABES Engineering College</span><span>Machine-Read, Fact-Checked</span></div>
+    <h1>The <em>Beacon</em></h1>
+    <div class="tagline">"Every front page, cross-examined." — today's headlines, sorted from spin</div>
+  </a>
+</header>
+
+<nav class="headline-nav">
+  <div class="wrap">
+    <a href="index.html" class="active">Front Page</a>
+    <a href="verify.html">Verify a Story</a>
+    <a href="trending.html">Trending Desk</a>
+    <a href="summarize.html">Summarizer</a>
+    <a href="classify.html">Classifier</a>
+  </div>
+</nav>
+
+<!-- ================= COLLAGE HERO ================= -->
+<section class="collage-section">
+
+  <div class="intro-wrap">
+    <div class="headline-ticker" aria-hidden="true">
+      <div class="headline-ticker__track" id="tickerTrack"></div>
+    </div>
+
+    <div class="wrap">
+      <div class="collage-intro">
+        <p class="kicker">THIS MORNING'S STACK</p>
+        <h2 class="headline" style="font-size:clamp(28px,4vw,42px);">Every paper on the desk, run through the same verdict.</h2>
+        <p>Four dedicated desks — verify a story, watch what's trending, summarize the long ones, and sort the rest. Pick a desk below to open it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="collage-frame">
+    <div class="collage">
+      <a class="paper card-a" href="https://timesofindia.indiatimes.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">The Times of India <span class="date">Nov 24</span></div>
+        <h3>Coalition talks stretch into the night as numbers stay razor-thin</h3>
+        <p>Party officials decline to confirm final tally ahead of Monday's session.</p>
+      </a>
+
+      <a class="paper card-b" href="https://www.express.co.uk" target="_blank" rel="noopener noreferrer">
+        <div class="flag">Daily Express <span class="date">Nov 24</span></div>
+        <h3>Detained protestors named as hostel unrest spreads to three campuses</h3>
+        <p>Officials say inquiry to conclude within the week.</p>
+      </a>
+
+      <a class="paper card-c" href="https://www.thehindu.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">The Hindu <span class="date">Nov 24</span></div>
+        <h3>Flyover collapse under review after weekend incident, four hurt</h3>
+        <p>Municipal engineers inspect load-bearing joints today.</p>
+      </a>
+
+      <a class="paper card-f" href="https://www.hindustantimes.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">Hindustan Times <span class="date">Nov 24</span></div>
+        <h3>Federal review board opens hearings on transit funding gap</h3>
+        <p>Testimony expected from three state transport officials.</p>
+      </a>
+
+      <a class="paper card-g" href="https://www.scmp.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">South China Morning Post <span class="date">Nov 24</span></div>
+        <h3>Cell-phone seizures reported at protest site amid rising tension</h3>
+        <p>Rights group calls for independent oversight of the raid.</p>
+      </a>
+
+      <a class="paper card-d" href="https://indianexpress.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">The Indian Express <span class="date">Nov 24</span></div>
+        <h3>Missing person case reopened after new witness statement filed</h3>
+        <p>Local police confirm additional patrols in the area.</p>
+      </a>
+
+      <a class="paper card-h" href="https://www.news18.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">News18 <span class="date">Nov 24</span></div>
+        <h3>Screenshot claiming election result leak debunked by officials</h3>
+        <p>Board confirms count is still in progress, no leak occurred.</p>
+        <span class="stampmini">FAKE</span>
+      </a>
+
+      <a class="paper card-i" href="https://observer.co.uk" target="_blank" rel="noopener noreferrer">
+        <div class="flag">The Observer <span class="date">Nov 24</span></div>
+        <h3>New robotics lab opens at regional engineering college</h3>
+        <p>Confirmed directly via the institution's official notice.</p>
+      </a>
+
+      <a class="paper card-e" href="https://www.deccanherald.com" target="_blank" rel="noopener noreferrer">
+        <div class="flag">Deccan Herald <span class="date">Nov 24</span></div>
+        <h3>Viral "cure-all" tonic post traced back to unverified vendor account</h3>
+        <p>No listed medical board approval found on record.</p>
+        <span class="stampmini">FAKE</span>
+      </a>
+
+      <div class="paper card-promo">
+        <div class="flag">Newsroom Desk <span class="date">START HERE</span></div>
+        <h3 style="font-size:20px;">Think a story's off? Get a verdict in seconds.</h3>
+        <p>Paste an article or a link and see how it holds up against known patterns of misinformation.</p>
+        <a class="btn-fill" href="verify.html">Open the Verify Desk →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div><span class="num">94.2%</span><span class="label">Model accuracy</span></div>
+    <div><span class="num">3.1M</span><span class="label">Articles indexed</span></div>
+    <div><span class="num">&lt;2s</span><span class="label">Time to verdict</span></div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ================= DESKS INDEX ================= -->
+<section class="wrap">
+  <p class="kicker">Today's Desks</p>
+  <h2 class="headline">Four rooms in this newsroom. Pick one.</h2>
+  <p class="dek">Each desk opens as its own page, built for exactly one job.</p>
+
+  <div class="desks-grid">
+    <a class="desk-card" href="verify.html">
+      <div class="desk-flag">Desk 01 · Fact-Check</div>
+      <h3>Verify a Story</h3>
+      <p>Paste an article or a URL and get a percentage-wise verdict on whether it's real or fake.</p>
+      <span class="go">Open Desk →</span>
+    </a>
+    <a class="desk-card" href="trending.html">
+      <div class="desk-flag">Desk 02 · Live Wire</div>
+      <h3>Trending Desk</h3>
+      <p>See what's actually trending, and what's trending false, side by side.</p>
+      <span class="go">Open Desk →</span>
+    </a>
+    <a class="desk-card" href="summarize.html">
+      <div class="desk-flag">Desk 03 · Clippings</div>
+      <h3>News Summarizer</h3>
+      <p>Paste a long article and get it reduced to the three claims that matter.</p>
+      <span class="go">Open Desk →</span>
+    </a>
+    <a class="desk-card" href="classify.html">
+      <div class="desk-flag">Desk 04 · Sorting</div>
+      <h3>News Classifier</h3>
+      <p>Sort any headline or article into Politics, Sports, Entertainment, and more.</p>
+      <span class="go">Open Desk →</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">The Verdict</a>
+        <p style="margin-top:12px;">A student-built newsroom for machine-assisted fact checking — verifying links, summarizing articles, and sorting the news, so readers spend less time guessing.</p>
+      </div>
+      <div>
+        <h4>About Us</h4>
+        <ul>
+          <li>@ Yatharth Sharma</li>
+          <li>@ Yatharth Srivastava</li>
+          <li>@ Yuvraj Mishra</li>
+          <li>@ Yogendra Yadav</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Desks</h4>
+        <ul>
+          <li><a href="verify.html">Verify a Story</a></li>
+          <li><a href="trending.html">Trending Desk</a></li>
+          <li><a href="summarize.html">Summarizer</a></li>
+          <li><a href="classify.html">Classifier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ABES Engineering college</span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

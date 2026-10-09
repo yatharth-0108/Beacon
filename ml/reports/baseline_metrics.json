@@ -1,0 +1,37 @@
+{
+  "dataset": "ISOT",
+  "train_samples": 31280,
+  "test_samples": 7820,
+  "majority_baseline": {
+    "accuracy": 0.5420716112531969,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "confusion_matrix": [
+      [
+        4239,
+        0
+      ],
+      [
+        3581,
+        0
+      ]
+    ]
+  },
+  "tfidf_logreg_baseline": {
+    "accuracy": 0.9824808184143222,
+    "precision": 0.9875424688561721,
+    "recall": 0.9740296006702038,
+    "f1": 0.9807394910726838,
+    "confusion_matrix": [
+      [
+        4195,
+        44
+      ],
+      [
+        93,
+        3488
+      ]
+    ]
+  }
+}

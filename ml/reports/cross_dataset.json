@@ -1,0 +1,12 @@
+{
+  "baseline": {
+    "isot_test": 0.9807394910726838,
+    "second_all": 0.6962558889164394,
+    "reverse_isot_all": 0.6627097182652738
+  },
+  "cleaned": {
+    "isot_test": 0.9762072363789948,
+    "second_all": 0.691284346636827,
+    "reverse_isot_all": 0.6436621603533663
+  }
+}

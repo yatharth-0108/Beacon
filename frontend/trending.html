@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending Desk — The Verdict</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span id="today"></span>
+    <span>Vol. I · No. 1 <span class="blink">● LIVE VERIFICATION</span></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <a class="masthead-link" href="index.html">
+    <div class="eyebrow"><span>Est. 2026</span><span>Khwopa College of Engineering</span><span>Machine-Read, Fact-Checked</span></div>
+    <h1>The <em>Beacon</em></h1>
+    <div class="tagline">"Every front page, cross-examined."</div>
+  </a>
+</header>
+
+<nav class="headline-nav">
+  <div class="wrap">
+    <a href="index.html">Front Page</a>
+    <a href="verify.html">Verify a Story</a>
+    <a href="trending.html" class="active">Trending Desk</a>
+    <a href="summarize.html">Summarizer</a>
+    <a href="classify.html">Classifier</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="kicker">Desk 02 · Live Wire</p>
+    <h2 class="headline">Clipped from today's stack.</h2>
+    <p class="dek">What's spreading, and what's actually spreading falsehoods — pulled straight off the pile.</p>
+  </div>
+</section>
+
+<section class="trend-section wrap" style="padding-top:0;">
+  <div class="trend-head-row">
+    <div></div>
+    <div class="trend-tabs">
+      <button type="button" class="active fake-active" data-filter="fake">Trending Fake</button>
+      <button type="button" data-filter="real">Trending Real</button>
+    </div>
+  </div>
+
+  <div class="clip-grid" id="clipGrid">
+    <div class="clip-item fake" data-cat="fake">
+      <div class="clip-flag"><span>The Herald</span><span>Flagged</span></div>
+      <div class="clip-body-i">
+        <h4>"Miracle mineral" cures reported illness overnight, viral post claims</h4>
+        <p>Flagged for fabricated medical sourcing and an unverified vendor account.</p>
+        <div class="clip-meta"><span>Health</span><span>92% Fake</span></div>
+      </div>
+    </div>
+    <div class="clip-item fake" data-cat="fake">
+      <div class="clip-flag"><span>Daily Express</span><span>Flagged</span></div>
+      <div class="clip-body-i">
+        <h4>Doctored image of stadium crowd used to claim record turnout</h4>
+        <p>Reverse image match traces the photo back to a 2016 event.</p>
+        <div class="clip-meta"><span>Politics</span><span>87% Fake</span></div>
+      </div>
+    </div>
+    <div class="clip-item fake" data-cat="fake">
+      <div class="clip-flag"><span>The Ledger</span><span>Flagged</span></div>
+      <div class="clip-body-i">
+        <h4>Fake quote attributed to central bank governor circulates on chat apps</h4>
+        <p>No matching statement found in any official transcript.</p>
+        <div class="clip-meta"><span>Business</span><span>95% Fake</span></div>
+      </div>
+    </div>
+    <div class="clip-item fake" data-cat="fake">
+      <div class="clip-flag"><span>The Bulletin</span><span>Flagged</span></div>
+      <div class="clip-body-i">
+        <h4>Screenshot claiming election result leak debunked by officials</h4>
+        <p>Board confirms count is still in progress, no leak occurred.</p>
+        <div class="clip-meta"><span>Politics</span><span>90% Fake</span></div>
+      </div>
+    </div>
+    <div class="clip-item fake" data-cat="fake">
+      <div class="clip-flag"><span>Morning Post</span><span>Flagged</span></div>
+      <div class="clip-body-i">
+        <h4>Old flood footage recirculated with a false, current date</h4>
+        <p>Metadata check places the original clip three years back.</p>
+        <div class="clip-meta"><span>Weather</span><span>84% Fake</span></div>
+      </div>
+    </div>
+    <div class="clip-item fake" data-cat="fake">
+      <div class="clip-flag"><span>The Chronicle</span><span>Flagged</span></div>
+      <div class="clip-body-i">
+        <h4>Fabricated "leaked memo" about exam paper attributed to board</h4>
+        <p>Board's official channel denies issuing any such memo.</p>
+        <div class="clip-meta"><span>Education</span><span>91% Fake</span></div>
+      </div>
+    </div>
+
+    <div class="clip-item real hidden-clip" data-cat="real">
+      <div class="clip-flag"><span>The Gazette</span><span>Verified</span></div>
+      <div class="clip-body-i">
+        <h4>Regional rainfall data released, confirms early monsoon pattern</h4>
+        <p>Cross-checked against three independent meteorological sources.</p>
+        <div class="clip-meta"><span>Weather</span><span>96% Real</span></div>
+      </div>
+    </div>
+    <div class="clip-item real hidden-clip" data-cat="real">
+      <div class="clip-flag"><span>Sunday Standard</span><span>Verified</span></div>
+      <div class="clip-body-i">
+        <h4>Local engineering college opens new robotics research lab</h4>
+        <p>Corroborated directly by the college's official press release.</p>
+        <div class="clip-meta"><span>Education</span><span>98% Real</span></div>
+      </div>
+    </div>
+    <div class="clip-item real hidden-clip" data-cat="real">
+      <div class="clip-flag"><span>The Herald</span><span>Verified</span></div>
+      <div class="clip-body-i">
+        <h4>National exam board publishes revised result schedule</h4>
+        <p>Matches the board's own published notice, timestamp confirmed.</p>
+        <div class="clip-meta"><span>Education</span><span>99% Real</span></div>
+      </div>
+    </div>
+    <div class="clip-item real hidden-clip" data-cat="real">
+      <div class="clip-flag"><span>The Observer</span><span>Verified</span></div>
+      <div class="clip-body-i">
+        <h4>Central bank holds interest rate steady, cites stable inflation</h4>
+        <p>Statement matches the bank's official press release in full.</p>
+        <div class="clip-meta"><span>Business</span><span>97% Real</span></div>
+      </div>
+    </div>
+    <div class="clip-item real hidden-clip" data-cat="real">
+      <div class="clip-flag"><span>The Ledger</span><span>Verified</span></div>
+      <div class="clip-body-i">
+        <h4>City council approves funding for new public library wing</h4>
+        <p>Confirmed via published council meeting minutes.</p>
+        <div class="clip-meta"><span>Local</span><span>95% Real</span></div>
+      </div>
+    </div>
+    <div class="clip-item real hidden-clip" data-cat="real">
+      <div class="clip-flag"><span>Daily Express</span><span>Verified</span></div>
+      <div class="clip-body-i">
+        <h4>National team announces squad ahead of regional tournament</h4>
+        <p>Matches the federation's official roster announcement.</p>
+        <div class="clip-meta"><span>Sports</span><span>98% Real</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">The Verdict</a>
+        <p style="margin-top:12px;">A student-built newsroom for machine-assisted fact checking — verifying links, summarizing articles, and sorting the news, so readers spend less time guessing.</p>
+      </div>
+      <div>
+        <h4>About Us</h4>
+        <ul>
+          <li>@ Yatharth Sharma</li>
+          <li>@ Yatharth Srivastava</li>
+          <li>@ Yuvraj Mishra</li>
+          <li>@ Yogendra Yadav</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Desks</h4>
+        <ul>
+          <li><a href="verify.html">Verify a Story</a></li>
+          <li><a href="trending.html">Trending Desk</a></li>
+          <li><a href="summarize.html">Summarizer</a></li>
+          <li><a href="classify.html">Classifier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ABES Engineering College</span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

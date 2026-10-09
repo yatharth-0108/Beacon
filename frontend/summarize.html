@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summarizer — The Verdict</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span id="today"></span>
+    <span>Vol. I · No. 1 <span class="blink">● LIVE VERIFICATION</span></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <a class="masthead-link" href="index.html">
+    <div class="eyebrow"><span>Est. 2026</span><span>ABES Engineering College</span><span>Machine-Read, Fact-Checked</span></div>
+    <h1>The <em>Beacon</em></h1>
+    <div class="tagline">"Every front page, cross-examined."</div>
+  </a>
+</header>
+
+<nav class="headline-nav">
+  <div class="wrap">
+    <a href="index.html">Front Page</a>
+    <a href="verify.html">Verify a Story</a>
+    <a href="trending.html">Trending Desk</a>
+    <a href="summarize.html" class="active">Summarizer</a>
+    <a href="classify.html">Classifier</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="kicker">Desk 03 · Clippings</p>
+    <h2 class="headline">Long story. Short verdict.</h2>
+    <p class="dek">Paste any article and get it reduced to the three claims that matter — so you can judge the substance before you judge the source.</p>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:10px;">
+  <div class="summarizer-grid">
+    <div class="summarizer-copy">
+      <h2 class="headline" style="font-size:26px;">What this desk does</h2>
+      <p>Drop a full article in, and get back the three load-bearing claims — nothing more.</p>
+      <ul class="feature-list">
+        <li><span class="mark">—</span><span>Strips filler and keeps only load-bearing claims</span></li>
+        <li><span class="mark">—</span><span>Flags where a summarized claim lacks a clear source</span></li>
+        <li><span class="mark">—</span><span>Works on articles, transcripts, and press releases</span></li>
+      </ul>
+    </div>
+
+    <div class="clip-card">
+      <div class="clip-head"><strong style="font-family:'Playfair Display',serif;">Clip &amp; Summarize</strong><span>PASTE-IN</span></div>
+      <div class="clip-body">
+        <textarea id="summaryInput" placeholder="Paste an article to summarize…"></textarea>
+        <div><button class="btn-outline" id="summarizeBtn">Summarize</button></div>
+        <div class="summary-out" id="summaryOut">
+          <h4>Three-Line Verdict</h4>
+          <ul id="summaryList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">The Beacon</a>
+        <p style="margin-top:12px;">A student-built newsroom for machine-assisted fact checking — verifying links, summarizing articles, and sorting the news, so readers spend less time guessing.</p>
+      </div>
+      <div>
+        <h4>About Us</h4>
+        <ul>
+          <li>@ Yatharth Sharma</li>
+          <li>@ Yatharth Srivastava</li>
+          <li>@ Yuvraj Mishra</li>
+          <li>@ Yogendra Yadav</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Desks</h4>
+        <ul>
+          <li><a href="verify.html">Verify a Story</a></li>
+          <li><a href="trending.html">Trending Desk</a></li>
+          <li><a href="summarize.html">Summarizer</a></li>
+          <li><a href="classify.html">Classifier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ABES Engineering College</span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

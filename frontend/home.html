@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beacon</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Source Serif 4",serif;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+
+    perspective:1200px;
+}    
+/* Newspaper Background */
+
+.bg{
+    position:fixed;
+    inset:0;
+
+    background:url("hi.jpeg") center center/cover no-repeat;
+
+    /* Balanced blur */
+    filter: blur(3px) brightness(.75);
+
+    transform: scale(1.05);
+
+    z-index:-2;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    /* Very light overlay */
+    background: rgba(0,0,0,.12);
+
+    z-index:-1;
+}
+
+.container{
+    text-align:center;
+
+    background: rgba(247,241,230,.82);
+
+    backdrop-filter: blur(5px);
+
+    padding:70px 90px;
+
+    border:4px solid #222;
+
+    box-shadow:0 25px 50px rgba(0,0,0,.35);
+    transition: transform .15s ease-out;
+
+    transform-style: preserve-3d;
+
+    will-change: transform;
+}
+}
+
+/* Dark Overlay */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.25);
+    z-index:-1;
+}
+
+/* Main Card */
+
+/* Inner Border */
+
+.container::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:10px;
+    left:10px;
+    right:10px;
+    bottom:10px;
+
+    border:1.5px solid rgba(120,90,60,.45);
+
+    border-radius:12px;
+
+    pointer-events:none;
+
+}
+/* Top Text */
+
+.small{
+
+    color:#8b0000;
+
+    text-transform:uppercase;
+
+    letter-spacing:5px;
+
+    font-size:15px;
+
+    margin-bottom:20px;
+
+}
+
+/* Heading */
+
+h1{
+
+    font-family:"Playfair Display",serif;
+
+    font-size:90px;
+
+    color:#222;
+
+}
+
+h1 em{
+
+    color:#a6161f;
+
+    font-style:italic;
+
+}
+
+/* Tagline */
+
+.tagline{
+
+    font-size:26px;
+
+    font-style:italic;
+
+    margin:25px 0;
+
+    color:#444;
+
+}
+
+/* Divider */
+
+.rule{
+
+    width:120px;
+
+    height:3px;
+
+    background:#a6161f;
+
+    margin:30px auto;
+
+}
+
+/* Stamp */
+
+.stamp{
+
+    display:inline-block;
+
+    border:3px solid #a6161f;
+
+    color:#a6161f;
+
+    padding:8px 18px;
+
+    margin-bottom:35px;
+
+    font-weight:bold;
+
+    transform:rotate(-8deg);
+
+    letter-spacing:3px;
+
+}
+
+/* Button */
+
+.btn{
+
+    display:inline-block;
+
+    background:#a6161f;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:18px 45px;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    background:#7f1118;
+
+    transform:translateY(-4px);
+
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.container{
+
+padding:45px 25px;
+
+margin:20px;
+
+}
+
+h1{
+
+font-size:60px;
+
+}
+
+.tagline{
+
+font-size:20px;
+
+}
+
+.btn{
+
+padding:15px 35px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+<div class="small">
+EST. 2026 • THOROUGHLY READ • FACT CHECKED
+</div>
+
+<h1>The <em>Beacon</em></h1>
+
+<p class="tagline">
+"Every news, cross-examined."
+</p>
+
+<div class="rule"></div>
+
+<div class="stamp">
+SPECIAL EDITION
+</div>
+
+<br>
+
+<a href="index.html" class="btn">
+Enter Newsroom
+</a>
+
+</div>
+<script>
+
+const card = document.querySelector(".container");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = (e.clientX - window.innerWidth / 2) / 35;
+    const y = (e.clientY - window.innerHeight / 2) / 35;
+
+    card.style.transform =
+    `translate(${x/5}px, ${y/5}px)
+     rotateY(${x}deg)
+     rotateX(${-y}deg)`;
+
+});
+
+document.addEventListener("mouseleave", () => {
+
+    card.style.transform =
+    "translate(0,0) rotateX(0deg) rotateY(0deg)";
+
+});
+
+</script>
+
+</body>
+</html>
+
+</body>
+</html>

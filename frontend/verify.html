@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify a Story — The Verdict</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span id="today"></span>
+    <span>Vol. I · No. 1 <span class="blink">● LIVE VERIFICATION</span></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <a class="masthead-link" href="index.html">
+    <div class="eyebrow"><span>Est. 2026</span><span>ABES Engineering College</span><span>Machine-Read, Fact-Checked</span></div>
+    <h1>The <em>Beacon</em></h1>
+    <div class="tagline">"Every front page, cross-examined."</div>
+  </a>
+</header>
+
+<nav class="headline-nav">
+  <div class="wrap">
+    <a href="index.html">Front Page</a>
+    <a href="verify.html" class="active">Verify a Story</a>
+    <a href="trending.html">Trending Desk</a>
+    <a href="summarize.html">Summarizer</a>
+    <a href="classify.html">Classifier</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="kicker">Desk 01 · Fact-Check</p>
+    <h2 class="headline">Paste it. We'll read between the lines.</h2>
+    <p class="dek">Drop in an article's text or a URL and get a percentage-wise verdict on whether it's real or fake, plus a short note on why.</p>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:10px;">
+  <div class="verify-card wide">
+    <div class="card-top">
+      <h3>Newsroom Desk</h3>
+      <span class="mono">INPUT-01</span>
+    </div>
+    <div class="toggle-group" role="tablist">
+      <button type="button" class="active" data-mode="article">For Article</button>
+      <button type="button" data-mode="url">For URL</button>
+      <button type="button" data-mode="image">For Image</button>
+    </div>
+    <textarea id="verifyInput" class="verify-input" placeholder="Paste the article text here…"></textarea>
+
+    <div class="verify-image" style="display: none;">
+      <div class="verify-image-header">
+        <span class="verify-image-label">IMAGE EVIDENCE</span>
+        <span class="verify-image-sub">Attach a screenshot or image of the story</span>
+      </div>
+      <div class="verify-image-box" id="verifyImageBox">
+        <input type="file" id="verifyImageInput" class="verify-image-input" accept="image/png,image/jpeg,image/webp" aria-label="Select image or screenshot to verify">
+        <label for="verifyImageInput" class="verify-image-drop" id="verifyImageDrop">
+          <span class="verify-image-btn">Choose Image</span>
+          <span class="verify-image-formats">Supported formats: JPG, JPEG, PNG, WEBP</span>
+        </label>
+        <div class="verify-image-preview-wrap" id="verifyImagePreviewWrap" style="display: none;">
+          <div class="verify-image-preview">
+            <img id="verifyImagePreview" src="" alt="Image evidence preview">
+          </div>
+          <div class="verify-image-meta">
+            <span class="verify-image-filename" id="verifyImageFilename"></span>
+            <button type="button" class="verify-image-remove" id="verifyImageRemove">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="verify-image-error" id="verifyImageError" style="display: none;" role="alert"></div>
+    </div>
+
+    <button class="verify-btn" id="predictBtn">Predict</button>
+
+    <div class="result" id="result">
+      <div class="stamp-row">
+        <span class="stamp" id="stampEl">FAKE</span>
+        <div class="meter-wrap">
+          <div class="meter-label"><span id="meterLeftLabel">Fake likelihood</span><span id="meterPct">0%</span></div>
+          <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+        </div>
+      </div>
+      <p class="result-note" id="resultNote"></p>
+    </div>
+  </div>
+
+  <div class="page-stats">
+    <div><span class="num">94.2%</span><span class="label">Model accuracy</span></div>
+    <div><span class="num">3.1M</span><span class="label">Articles indexed</span></div>
+    <div><span class="num">&lt;2s</span><span class="label">Time to verdict</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">The Beacon</a>
+        <p style="margin-top:12px;">A student-built newsroom for machine-assisted fact checking — verifying links, summarizing articles, and sorting the news, so readers spend less time guessing.</p>
+      </div>
+      <div>
+        <h4>About Us</h4>
+        <ul>
+          <li>@ Yatharth Sharma</li>
+          <li>@ Yatharth Srivastava</li>
+          <li>@ Yuvraj Mishra</li>
+          <li>@ Yogendra Yadav</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Desks</h4>
+        <ul>
+          <li><a href="verify.html">Verify a Story</a></li>
+          <li><a href="trending.html">Trending Desk</a></li>
+          <li><a href="summarize.html">Summarizer</a></li>
+          <li><a href="classify.html">Classifier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ABES Engineering College</span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

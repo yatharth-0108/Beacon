@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classifier — The Beacon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <span id="today"></span>
+    <span>Vol. I · No. 1 <span class="blink">● LIVE VERIFICATION</span></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <a class="masthead-link" href="index.html">
+    <div class="eyebrow"><span>Est. 2026</span><span>ABES Engineering College</span><span>Machine-Read, Fact-Checked</span></div>
+    <h1>The <em>Beacon</em></h1>
+    <div class="tagline">"Every front page, cross-examined."</div>
+  </a>
+</header>
+
+<nav class="headline-nav">
+  <div class="wrap">
+    <a href="index.html">Front Page</a>
+    <a href="verify.html">Verify a Story</a>
+    <a href="trending.html">Trending Desk</a>
+    <a href="summarize.html">Summarizer</a>
+    <a href="classify.html" class="active">Classifier</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="kicker">Desk 04 · Sorting</p>
+    <h2 class="headline">Every story has a section. We find it.</h2>
+    <p class="dek">Paste in a headline or article and the classifier sorts it the way a newsroom would — into the section it belongs on.</p>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:10px;">
+  <div class="classifier-card">
+    <textarea id="classifyInput" class="verify-input" placeholder="Paste a headline or short article…" style="background:#fff;min-height:100px;"></textarea>
+    <button class="btn-outline" id="classifyBtn" style="margin-top:14px;">Classify</button>
+    <div class="chip-row" id="chipRow">
+      <span class="chip" data-cat="politics">Politics</span>
+      <span class="chip" data-cat="sports">Sports</span>
+      <span class="chip" data-cat="entertainment">Entertainment</span>
+      <span class="chip" data-cat="technology">Technology</span>
+      <span class="chip" data-cat="business">Business</span>
+      <span class="chip" data-cat="health">Health</span>
+    </div>
+    <p class="classify-result" id="classifyResult"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html">The Verdict</a>
+        <p style="margin-top:12px;">A student-built newsroom for machine-assisted fact checking — verifying links, summarizing articles, and sorting the news, so readers spend less time guessing.</p>
+      </div>
+      <div>
+        <h4>About Us</h4>
+        <ul>
+          <li>@ Yatharth Sharma</li>
+          <li>@ Yatharth Srivastava</li>
+          <li>@ Yuvraj Mishra</li>
+          <li>@ Yogendra Yadav</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Desks</h4>
+        <ul>
+          <li><a href="verify.html">Verify a Story</a></li>
+          <li><a href="trending.html">Trending Desk</a></li>
+          <li><a href="summarize.html">Summarizer</a></li>
+          <li><a href="classify.html">Classifier</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ABES Engineering College</span>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
