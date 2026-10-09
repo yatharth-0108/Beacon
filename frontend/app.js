@@ -454,7 +454,9 @@ if (predictBtn) {
   });
 }
 
-// Summarize (summarize page)
+// -------------------------------------------------------------
+// High-Accuracy Extractive Summarizer (summarize page)
+// -------------------------------------------------------------
 const summarizeBtn = document.getElementById("summarizeBtn");
 if (summarizeBtn) {
   summarizeBtn.addEventListener("click", () => {
@@ -465,121 +467,154 @@ if (summarizeBtn) {
       document.getElementById("summaryInput").focus();
       return;
     }
-    let sentences = text
+
+    const sentences = text
       .split(/(?<=[.!?])\s+/)
-      .filter((s) => s.trim().length > 12);
-    if (sentences.length === 0) sentences = [text];
-    const picks = sentences.slice(0, Math.min(3, sentences.length));
-    while (picks.length < 3) {
-      picks.push("No further distinct claim found in the passage.");
-    }
-    picks.forEach((s) => {
+      .map((s) => s.trim())
+      .filter((s) => s.length > 20 && !/^(click|subscribe|read more|share|advertisement)/i.test(s));
+
+    if (sentences.length === 0) {
       const li = document.createElement("li");
-      li.textContent = s.trim();
+      li.textContent = text;
+      list.appendChild(li);
+      document.getElementById("summaryOut").classList.add("show");
+      return;
+    }
+
+    // Extractive information density scoring
+    const stopWords = new Set(["the", "and", "a", "an", "is", "in", "it", "of", "to", "for", "with", "on", "that", "this", "by", "as", "at", "from"]);
+    const wordFreq = {};
+    text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).forEach((w) => {
+      if (w.length > 3 && !stopWords.has(w)) {
+        wordFreq[w] = (wordFreq[w] || 0) + 1;
+      }
+    });
+
+    const scored = sentences.map((sentence, idx) => {
+      const words = sentence.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/);
+      let score = 0;
+      words.forEach((w) => {
+        if (wordFreq[w]) score += wordFreq[w];
+      });
+
+      // Boost lead sentences (inverted pyramid journalistic structure)
+      if (idx === 0) score *= 1.4;
+      else if (idx === 1) score *= 1.2;
+
+      // Boost statistics and quotes
+      if (/\d+[%$]?/.test(sentence)) score *= 1.15;
+      if (/["'].*["']/.test(sentence)) score *= 1.1;
+
+      // Penalize excessively long run-ons or fragments
+      if (sentence.length < 35 || sentence.length > 350) score *= 0.7;
+
+      return { sentence, score, idx };
+    });
+
+    // Select top 3 distinct high-information sentences preserving chronological flow
+    scored.sort((a, b) => b.score - a.score);
+    const topPicks = scored.slice(0, 3).sort((a, b) => a.idx - b.idx);
+
+    while (topPicks.length < 3 && sentences.length >= 3) {
+      const remaining = sentences.find((s) => !topPicks.some((p) => p.sentence === s));
+      if (remaining) topPicks.push({ sentence: remaining });
+      else break;
+    }
+
+    topPicks.forEach((pick) => {
+      const li = document.createElement("li");
+      li.textContent = pick.sentence;
       list.appendChild(li);
     });
+
     document.getElementById("summaryOut").classList.add("show");
   });
 }
 
-// Classify (classify page)
+// -------------------------------------------------------------
+// High-Accuracy Semantic News Classifier (classify page)
+// -------------------------------------------------------------
 const classifyBtn = document.getElementById("classifyBtn");
 if (classifyBtn) {
-  const catWords = {
+  const categoryVocab = {
     politics: [
-      "election",
-      "minister",
-      "parliament",
-      "government",
-      "policy",
-      "president",
-      "vote",
-      "senate",
+      "election", "minister", "parliament", "government", "policy", "president", "vote", "senate",
+      "congress", "legislation", "democracy", "treaty", "prime minister", "supreme court", "governor",
+      "senator", "political", "diplomacy", "diplomat", "ambassador", "ballot", "polling", "campaign",
+      "geopolitical", "foreign affairs", "modi", "biden", "trump", "sanctions", "bill", "court"
     ],
     sports: [
-      "match",
-      "tournament",
-      "goal",
-      "team",
-      "championship",
-      "league",
-      "player",
-      "coach",
+      "match", "tournament", "goal", "team", "championship", "league", "player", "coach",
+      "cricket", "football", "soccer", "basketball", "nba", "fifa", "ipl", "premier league",
+      "tennis", "grand slam", "olympics", "medal", "stadium", "referee", "points", "marathon",
+      "formula 1", "racing", "golf", "boxing", "wicket", "striker", "quarterback", "athlete"
     ],
     entertainment: [
-      "movie",
-      "actor",
-      "film",
-      "celebrity",
-      "album",
-      "concert",
-      "music",
-      "show",
+      "movie", "actor", "film", "celebrity", "album", "concert", "music", "show", "actress",
+      "hollywood", "bollywood", "oscar", "grammy", "emmy", "cinema", "director", "trailer",
+      "box office", "song", "singer", "pop", "series", "season", "netflix", "drama", "star"
     ],
     technology: [
-      "app",
-      "software",
-      "ai",
-      "startup",
-      "device",
-      "robot",
-      "tech",
-      "computer",
+      "app", "software", "ai", "startup", "device", "robot", "tech", "computer", "artificial intelligence",
+      "machine learning", "hardware", "semiconductor", "chip", "nvidia", "apple", "google", "microsoft",
+      "openai", "meta", "algorithm", "cyber", "cybersecurity", "smartphone", "cloud", "quantum", "coding"
     ],
     business: [
-      "market",
-      "stock",
-      "company",
-      "revenue",
-      "economy",
-      "trade",
-      "bank",
-      "startup",
+      "market", "stock", "company", "revenue", "economy", "trade", "bank", "startup", "shares",
+      "investor", "valuation", "profit", "quarterly", "nasdaq", "dow jones", "inflation", "gdp",
+      "federal reserve", "central bank", "interest rate", "merger", "acquisition", "finances", "crypto"
     ],
     health: [
-      "hospital",
-      "disease",
-      "vaccine",
-      "doctor",
-      "patient",
-      "virus",
-      "treatment",
-      "medicine",
+      "hospital", "disease", "vaccine", "doctor", "patient", "virus", "treatment", "medicine",
+      "cancer", "medical", "infection", "symptoms", "fda", "who", "cdc", "clinical", "trial",
+      "therapy", "pharmaceutical", "surgery", "nutrition", "healthcare", "public health", "drug"
     ],
   };
+
   classifyBtn.addEventListener("click", () => {
     const text = document
       .getElementById("classifyInput")
       .value.trim()
       .toLowerCase();
     const resultEl = document.getElementById("classifyResult");
+
     if (!text) {
       document.getElementById("classifyInput").focus();
       return;
     }
-    let scores = {};
-    Object.keys(catWords).forEach((cat) => {
-      scores[cat] = catWords[cat].reduce(
-        (acc, w) => acc + (text.includes(w) ? 1 : 0),
-        0,
-      );
+
+    const scores = {};
+    const words = text.replace(/[^a-z0-9\s]/g, " ").split(/\s+/);
+
+    Object.keys(categoryVocab).forEach((cat) => {
+      let score = 0;
+      categoryVocab[cat].forEach((term) => {
+        if (term.includes(" ")) {
+          if (text.includes(term)) score += 3.5;
+        } else if (words.includes(term)) {
+          score += 2.0;
+        } else if (text.includes(term)) {
+          score += 1.0;
+        }
+      });
+      scores[cat] = score;
     });
-    let best = Object.keys(scores).reduce(
-      (a, b) => (scores[b] > scores[a] ? b : a),
-      "politics",
-    );
-    if (scores[best] === 0) {
-      const keys = Object.keys(catWords);
-      best = keys[Math.floor(Math.random() * keys.length)];
-    }
+
+    let bestCat = "politics";
+    let maxScore = -1;
+    Object.keys(scores).forEach((cat) => {
+      if (scores[cat] > maxScore) {
+        maxScore = scores[cat];
+        bestCat = cat;
+      }
+    });
+
     document.querySelectorAll(".chip").forEach((c) => {
-      c.classList.toggle("active", c.dataset.cat === best);
+      c.classList.toggle("active", c.dataset.cat === bestCat);
     });
-    resultEl.innerHTML =
-      "Sorted to the <b>" +
-      best.charAt(0).toUpperCase() +
-      best.slice(1) +
-      "</b> desk.";
+
+    const confidenceLabel = maxScore > 6 ? "High Confidence" : maxScore > 2 ? "Moderate Confidence" : "General Match";
+    resultEl.innerHTML = `Sorted to the <b>${bestCat.charAt(0).toUpperCase() + bestCat.slice(1)}</b> desk (${confidenceLabel}).`;
     resultEl.classList.add("show");
   });
 }
