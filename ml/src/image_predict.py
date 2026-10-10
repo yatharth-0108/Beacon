@@ -83,7 +83,7 @@ class ImagePredictor:
             if meta.get("is_clean_graphic", 0) > 0.5:
                 diagnosis = f"Authentic digital graphic/logo ({filename}). Vector structure and clean uniform rasterization verified."
             else:
-                diagnosis = "Optical noise consistency, sensor pattern, and compression history are consistent with authentic camera media."
+                diagnosis = "Spatial noise variance and Fourier spectral characteristics are consistent with authentic photographic media."
 
         return {
             "success": True,

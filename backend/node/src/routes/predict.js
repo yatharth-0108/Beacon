@@ -2,7 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const cheerio = require("cheerio");
 const fastapiClient = require("../services/fastapiClient");
-const { verifyClaimEvidence } = require("../services/evidenceVerifier");
+const { verifyClaimEvidence, isSafeUrl } = require("../services/evidenceVerifier");
 const { upsertCheck } = require("../models/Check");
 const { sha256 } = require("../utils/hash");
 
@@ -25,13 +25,13 @@ const upload = multer({
  * Hybrid Verification: Combines Evidence-Based Fact Verification with ML Writing-Style Analysis.
  * Strict rule: Never confuse writing style with factual truth.
  */
-async function analyzeStory(cleanText) {
+async function analyzeStory(cleanText, explicitUrl = null) {
   const wordCount = cleanText.split(/\s+/).filter(Boolean).length;
 
-  // 1. Run factual claim evidence verification against authoritative public records
-  let evidence = { verdict: "INSUFFICIENT EVIDENCE", sources: [], explanation: "" };
+  // 1. Run factual claim evidence verification against authoritative sources
+  let evidence = { verdict: "INSUFFICIENT EVIDENCE", sources: [], explanation: "", claim_results: [] };
   try {
-    evidence = await verifyClaimEvidence(cleanText);
+    evidence = await verifyClaimEvidence(cleanText, explicitUrl);
   } catch (evErr) {
     console.warn("Evidence verification check failed:", evErr.message);
   }
@@ -46,7 +46,8 @@ async function analyzeStory(cleanText) {
       is_factual_check: true,
       explanation: evidence.explanation,
       sources: evidence.sources || [],
-      model_version: "2026-10-09-evidence-v2",
+      claim_results: evidence.claim_results || [],
+      model_version: "2026-10-10-evidence-v3",
       disclaimer:
         "Factual Claim Verification: Public health, scientific, and encyclopedic records directly contradict this claim.",
     };
@@ -56,13 +57,14 @@ async function analyzeStory(cleanText) {
     return {
       label: "SUPPORTED",
       verdict: "SUPPORTED",
-      fake_score: evidence.fake_score || 0.04,
-      confidence: evidence.confidence || 0.96,
+      fake_score: evidence.fake_score || 0.03,
+      confidence: evidence.confidence || 0.97,
       is_factual_check: true,
       explanation: evidence.explanation,
       sources: evidence.sources || [],
-      model_version: "2026-10-09-evidence-v2",
-      disclaimer: "Factual Claim Verification: Aligns with established scientific and public record consensus.",
+      claim_results: evidence.claim_results || [],
+      model_version: "2026-10-10-evidence-v3",
+      disclaimer: "Factual Claim Verification: Confirmed by primary authoritative sources and verified documentation.",
     };
   }
 
@@ -77,7 +79,8 @@ async function analyzeStory(cleanText) {
       explanation:
         "No definitive factual evidence was retrieved to confirm or contradict this claim. A short statement lacks sufficient length for reliable writing-pattern classification.",
       sources: evidence.sources || [],
-      model_version: "2026-10-09-hybrid-v2",
+      claim_results: evidence.claim_results || [],
+      model_version: "2026-10-10-hybrid-v3",
       disclaimer: "Factual evidence inconclusive; independent verification advised.",
     };
   }
@@ -97,6 +100,7 @@ async function analyzeStory(cleanText) {
         explanation:
           "Linguistic pattern analysis indicates sensationalist or unsubstantiated writing structures typical of unreliable reporting.",
         sources: evidence.sources || [],
+        claim_results: evidence.claim_results || [],
         model_version: rawPrediction.model_version || "2026-09-30-lr-v1",
         disclaimer: "Automated model prediction based on writing patterns; not a verified fact-check.",
       };
@@ -110,6 +114,7 @@ async function analyzeStory(cleanText) {
         explanation:
           "Linguistic pattern analysis indicates standard journalistic writing structure. (Specific factual claims within the article must still be verified independently).",
         sources: evidence.sources || [],
+        claim_results: evidence.claim_results || [],
         model_version: rawPrediction.model_version || "2026-09-30-lr-v1",
         disclaimer: "Automated model prediction based on writing patterns; not a verified fact-check.",
       };
@@ -123,6 +128,7 @@ async function analyzeStory(cleanText) {
         explanation:
           "Inconclusive verdict: Writing style is ambiguous (borderline 50%), and no direct factual verification was found.",
         sources: evidence.sources || [],
+        claim_results: evidence.claim_results || [],
         model_version: rawPrediction.model_version || "2026-09-30-lr-v1",
         disclaimer: "Inconclusive writing patterns; independent fact-checking recommended.",
       };
@@ -137,24 +143,19 @@ async function analyzeStory(cleanText) {
       is_factual_check: false,
       explanation: "Could not complete full linguistic classification; factual evidence was inconclusive.",
       sources: evidence.sources || [],
-      model_version: "2026-10-09-fallback",
+      claim_results: [],
+      model_version: "2026-10-10-fallback",
       disclaimer: "Service status: fallback mode.",
     };
   }
 }
 
 /**
- * Safely extract readable article title and text from an external URL.
+ * Safely extract readable article title and text from an external URL with SSRF protection.
  */
 async function extractArticleFromUrl(targetUrl) {
-  let parsedUrl;
-  try {
-    parsedUrl = new URL(targetUrl);
-    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      throw new Error("Invalid URL protocol. Only HTTP and HTTPS URLs are supported.");
-    }
-  } catch (e) {
-    throw new Error("Please provide a valid URL starting with http:// or https://");
+  if (!isSafeUrl(targetUrl)) {
+    throw new Error("Invalid or restricted URL. Localhost and private network addresses are blocked.");
   }
 
   const controller = new AbortController();
@@ -162,11 +163,11 @@ async function extractArticleFromUrl(targetUrl) {
 
   let response;
   try {
-    response = await fetch(parsedUrl.toString(), {
+    response = await fetch(targetUrl, {
       signal: controller.signal,
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 BeaconNewsroom/1.0",
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 BeaconNewsroom/2.0",
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       },
     });
@@ -206,7 +207,7 @@ async function extractArticleFromUrl(targetUrl) {
   const articleEl = $("article, main, [role='main'], .article-body, .story-body, .post-content, .entry-content");
   const targetScope = articleEl.length > 0 ? articleEl : $("body");
 
-  targetScope.find("p").each((_, el) => {
+  targetScope.find("p, li").each((_, el) => {
     const pText = $(el).text().trim();
     if (pText.length > 25) {
       paragraphs.push(pText);
@@ -277,7 +278,7 @@ const handleUrlPrediction = async (req, res) => {
 
   try {
     const { title, text } = await extractArticleFromUrl(url.trim());
-    const result = await analyzeStory(text);
+    const result = await analyzeStory(text, url.trim());
 
     return res.json({
       ...result,

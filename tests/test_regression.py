@@ -104,3 +104,57 @@ def test_regression_image_upload():
         res = json.loads(resp.read().decode())
         assert "prediction" in res
         assert "confidence" in res
+
+
+def test_regression_chandrayaan3_soft_landing():
+    """Phase 4 Regression: Chandrayaan-3 soft landing factual verification."""
+    article = (
+        "India's Chandrayaan-3 mission achieved a soft landing on the Moon on 23 August 2023. "
+        "The mission included the Vikram lander and Pragyan rover and marked a major milestone for India's space programme."
+    )
+    status, res = post_json(BASE_URL, {"text": article})
+    assert status == 200
+    assert res["label"] == "SUPPORTED"
+    assert res["verdict"] == "SUPPORTED"
+    assert res["fake_score"] < 0.10
+    assert res["confidence"] >= 0.90
+    assert any("isro.gov.in" in s.get("url", "") or "wikipedia.org" in s.get("url", "") for s in res.get("sources", []))
+    assert len(res.get("claim_results", [])) > 0
+    assert all(c.get("status") == "SUPPORTED" for c in res.get("claim_results", []))
+
+
+def test_regression_corrupted_image():
+    """Phase 8/9: Ensure corrupted or invalid image returns clear client error (400/502)."""
+    boundary = "----RegressionBoundaryCorrupt"
+    body = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="image"; filename="corrupted.jpg"\r\n'
+        f"Content-Type: image/jpeg\r\n\r\n"
+    ).encode("utf-8") + b"NOT_A_VALID_JPEG_HEADER" + f"\r\n--{boundary}--\r\n".encode("utf-8")
+
+    req = urllib.request.Request(
+        f"{BASE_URL}/image",
+        data=body,
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"}
+    )
+    with pytest.raises(urllib.error.HTTPError) as exc_info:
+        urllib.request.urlopen(req, timeout=10)
+    assert exc_info.value.code in [400, 422, 502]
+
+
+def test_regression_ambiguous_short_rumor():
+    """Phase 6/9: Short ambiguous unverified claim returns UNCERTAIN / INSUFFICIENT EVIDENCE."""
+    claim = "Secret negotiations took place yesterday between rival ministers in an undisclosed cafe."
+    status, res = post_json(BASE_URL, {"text": claim})
+    assert status == 200
+    assert res["label"] in ["UNCERTAIN", "INSUFFICIENT EVIDENCE"]
+    assert res["fake_score"] == 0.5
+    assert res["confidence"] == 0.5
+
+
+def test_regression_ssrf_internal_ip_blocked():
+    """Phase 7/9: Ensure SSRF protection blocks private network and localhost URLs."""
+    with pytest.raises(urllib.error.HTTPError) as exc_info:
+        post_json(f"{BASE_URL}/url", {"url": "http://127.0.0.1:8000/health"})
+    assert exc_info.value.code == 422
+
